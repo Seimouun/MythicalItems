@@ -1,0 +1,10 @@
+name: MythicalItems
+main: at.smn.mythicalitems.main.Main
+version: 1.0.0
+api-version: 1.16
+depend: [ProtocolLib]
+commands:
+  mythicalitems:
+   description: get the mytical items item wheel
+  mi:
+   description: get the mytical items item wheel
