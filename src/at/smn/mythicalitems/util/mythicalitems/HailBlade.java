@@ -21,7 +21,7 @@ public class HailBlade extends MythicalEventItemStack {
 	public static HashMap<String, Long> lastClickHash = new HashMap<>();
 	
 	public HailBlade() {
-		super(Material.NETHERITE_SWORD, MythicalItemRarity.DEMONIC, "Hail Blade");
+		super(Material.NETHERITE_SWORD, MythicalItemRarity.DEMONIC, "Hail Blade (NOT FINISHED)");
 		// TODO Auto-generated constructor stub
 	}
 
