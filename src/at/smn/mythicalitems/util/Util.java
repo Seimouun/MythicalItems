@@ -36,6 +36,7 @@ import com.comphenix.protocol.wrappers.WrappedDataWatcher.Serializer;
 import com.google.common.collect.Sets;
 
 import at.smn.mythicalitems.enums.MythicalItemRarity;
+import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_16_R3.DataWatcher;
 import net.minecraft.server.v1_16_R3.NBTTagCompound;
 import net.minecraft.server.v1_16_R3.NBTTagInt;
@@ -55,7 +56,7 @@ public class Util {
 	public static MythicalItemStack createMythicalItem(Material mat, String itemName, MythicalItemRarity rarity) {
 		MythicalItemStack is = new MythicalItemStack(mat, rarity);
 		ItemMeta im = is.getItemMeta();
-		im.setDisplayName("§r§7[" + rarity.getColorCode() + rarity.getIcon() + "§7] §r" + itemName);
+		im.setDisplayName(ChatColor.GRAY + "[" + rarity.getColorCode() + rarity.getIcon() + ChatColor.GRAY + "] " + ChatColor.RESET + itemName);
 		is.setItemMeta(im);
 		return is;
 	}
@@ -76,7 +77,7 @@ public class Util {
         item.setTag(nbt);
         is = ItemRegistry.makeItemMythical(CraftItemStack.asBukkitCopy(item));
 		ItemMeta im = is.getItemMeta();
-		im.setDisplayName("§r§7[" + rarity.getColorCode() + rarity.getIcon() + "§7] §r" + itemName);
+		im.setDisplayName(ChatColor.GRAY + "[" + rarity.getColorCode() + rarity.getIcon() + ChatColor.GRAY + "] " + ChatColor.RESET + itemName);
 		is.setItemMeta(im);
 		return is;
 	}

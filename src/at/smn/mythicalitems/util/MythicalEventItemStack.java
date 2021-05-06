@@ -37,7 +37,7 @@ public abstract class MythicalEventItemStack extends MythicalItemStack implement
 		if(is == null || is.getItemMeta() == null || is.getItemMeta().getLore() == null || is.getItemMeta().getDisplayName() == null)
 			return null;
 		String name = is.getItemMeta().getDisplayName();
-		MythicalItemRarity rarity = MythicalItemRarity.valueOf(ChatColor.stripColor(is.getItemMeta().getLore().get(0).replace("§7Rarity§f: ", "")));
+		MythicalItemRarity rarity = MythicalItemRarity.valueOf(ChatColor.stripColor(is.getItemMeta().getLore().get(0).replace(ChatColor.GRAY + "Rarity" + ChatColor.WHITE + ": ", "")));
 		for(MythicalEventItemStack stack : ItemRegistry.itemRegistry) {
 			if(stack.getRarity().equals(rarity) && name.equals(stack.getItemMeta().getDisplayName())) {
 				return stack;

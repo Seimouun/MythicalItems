@@ -1,15 +1,17 @@
 package at.smn.mythicalitems.enums;
 
+import org.bukkit.ChatColor;
+
 public enum MythicalItemRarity {
 	
-	COMMON("§7"), UNCOMMON("§a"), RARE("§9"), EPIC("§5"), LEGENDARY("§6"), DEMONIC("§4");
+	COMMON(ChatColor.GRAY), UNCOMMON(ChatColor.GREEN), RARE(ChatColor.BLUE), EPIC(ChatColor.DARK_PURPLE), LEGENDARY(ChatColor.GOLD), DEMONIC(ChatColor.DARK_RED);
 	
-	String colorCode;
+	ChatColor colorCode;
 	
-	private MythicalItemRarity(String colorCode) {
+	private MythicalItemRarity(ChatColor colorCode) {
 		this.colorCode = colorCode;
 	}
-	public String getColorCode() {
+	public ChatColor getColorCode() {
 		return colorCode;
 	}
 	public char getIcon() {

@@ -59,9 +59,9 @@ public class MythicalItemStack extends ItemStack {
 		if(rarity != null) {
 			List<String> lore = new ArrayList<>();
 			MythicalItemRarity rarity = getRarity();
-			lore.add("§7Rarity§f: " + rarity.getColorCode() + rarity.name());
+			lore.add(ChatColor.GRAY + "Rarity" + ChatColor.WHITE + ": " + rarity.getColorCode() + rarity.name());
 			im.setLore(lore);
-			im.setDisplayName("§r§7[" + rarity.getColorCode() + rarity.getIcon() + "§7] §r" + ((this.name == null) ? getName() : name));
+			im.setDisplayName(ChatColor.GRAY + "[" + rarity.getColorCode() + rarity.getIcon() + ChatColor.GRAY + "] " + ChatColor.RESET + ((this.name == null) ? getName() : name));
 			setItemMeta(im);
 		}
 		return im;
@@ -70,7 +70,7 @@ public class MythicalItemStack extends ItemStack {
 		if(is == null || is.getItemMeta() == null || is.getItemMeta().getLore() == null || is.getItemMeta().getDisplayName() == null)
 			return null;
 		String name = is.getItemMeta().getDisplayName();
-		MythicalItemRarity rarity = MythicalItemRarity.valueOf(ChatColor.stripColor(is.getItemMeta().getLore().get(0).replace("§7Rarity§f: ", "")));
+		MythicalItemRarity rarity = MythicalItemRarity.valueOf(ChatColor.stripColor(is.getItemMeta().getLore().get(0).replace(ChatColor.GRAY + "Rarity" + ChatColor.WHITE + ": ", "")));
 		for(MythicalItemStack stack : ItemRegistry.itemRegistry) {
 			if(stack.getRarity().equals(rarity) && name.equals(stack.getItemMeta().getDisplayName())) {
 				return stack;
