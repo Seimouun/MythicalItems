@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 import at.smn.mythicalitems.enums.MythicalItemRarity;
 import at.smn.mythicalitems.util.mythicalitems.BoulderToss;
+import at.smn.mythicalitems.util.mythicalitems.DualWield;
 import at.smn.mythicalitems.util.mythicalitems.FlingShot;
 import at.smn.mythicalitems.util.mythicalitems.FocusedAegis;
 import at.smn.mythicalitems.util.mythicalitems.GoldenAegis;
@@ -47,6 +48,7 @@ public class ItemRegistry {
 		itemRegistry.add(new SkySplitter());
 		itemRegistry.add(new UnstableMatter());
 		itemRegistry.add(new HailBlade());
+		itemRegistry.add(new DualWield());
 	}
 	public static MythicalItemStack makeItemMythical(ItemStack stack) {
 		if(MythicalItemStack.getStackFromBukkit(stack) == null) {

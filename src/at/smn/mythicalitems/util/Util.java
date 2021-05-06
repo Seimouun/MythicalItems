@@ -38,11 +38,16 @@ import com.google.common.collect.Sets;
 import at.smn.mythicalitems.enums.MythicalItemRarity;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_16_R3.DataWatcher;
+import net.minecraft.server.v1_16_R3.EntityPlayer;
+import net.minecraft.server.v1_16_R3.EnumHand;
 import net.minecraft.server.v1_16_R3.NBTTagCompound;
 import net.minecraft.server.v1_16_R3.NBTTagInt;
 import net.minecraft.server.v1_16_R3.NBTTagList;
 import net.minecraft.server.v1_16_R3.NBTTagString;
+import net.minecraft.server.v1_16_R3.PacketPlayInArmAnimation;
+import net.minecraft.server.v1_16_R3.PacketPlayOutAnimation;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityMetadata;
+import net.minecraft.server.v1_16_R3.PlayerConnection;
 
 public class Util {
 
@@ -279,4 +284,13 @@ public class Util {
     	}
     	return false;
     }
+    public static void offHandAnimation(Player player) {
+        EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+        PlayerConnection playerConnection = entityPlayer.playerConnection;
+        PacketPlayOutAnimation packetPlayOutAnimation = new PacketPlayOutAnimation(entityPlayer, 3);
+
+        playerConnection.sendPacket(packetPlayOutAnimation);
+        playerConnection.a(new PacketPlayInArmAnimation(EnumHand.OFF_HAND));
+    }
+
 }

@@ -67,7 +67,7 @@ public class SkySplitter extends MythicalEventItemStack{
 							cancel();
 						}
 						Location locSky = loc.clone();
-						locSky.setY(80);
+						locSky.setY(shulker.getLocation().getY() + 60);
 						loc.getWorld().spawnParticle(Particle.CLOUD, locSky, 500, 10, 1, 10, 0.04, null, true);
 						i++;
 					}

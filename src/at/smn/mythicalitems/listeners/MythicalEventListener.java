@@ -152,6 +152,15 @@ public class MythicalEventListener implements Listener {
 			Util.setEntityGlowing(e, player, false);
 			MythicalEventItemStack.glowingList.remove(player.getName());
 			MythicalEventItemStack.holdSelectionItem.remove(event.getPlayer());
+			if(stack != null) {
+				stack.action(event, true);
+			}else {
+				currentItem = player.getInventory().getItem(event.getPreviousSlot());
+				stack = MythicalEventItemStack.getStackFromBukkit(currentItem);
+				if(stack != null) {
+					stack.action(event, false);
+				}
+			}
 		}
 	}
 	@EventHandler
