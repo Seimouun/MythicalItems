@@ -1,20 +1,21 @@
 package at.smn.mythicalitems.util.mythicalitems;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
+import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Trident;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import at.smn.mythicalitems.enums.MythicalItemRarity;
 import at.smn.mythicalitems.main.Main;
 import at.smn.mythicalitems.util.MythicalEventItemStack;
-import at.smn.mythicalitems.util.Util;
 
 public class HailBlade extends MythicalEventItemStack {
 
@@ -36,24 +37,19 @@ public class HailBlade extends MythicalEventItemStack {
 						
 						@Override
 						public void run() {
-							System.out.println(System.currentTimeMillis() - lastClickHash.get(player.getName()));
-							if(System.currentTimeMillis() - lastClickHash.get(player.getName()) > 140) {
+							if(System.currentTimeMillis() - lastClickHash.get(player.getName()) > 150) {
 								lastClickHash.remove(player.getName());
+								player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_RETURN, 2f, 0.5f);
+								player.getWorld().playSound(player.getLocation(), Sound.BLOCK_CONDUIT_DEACTIVATE, 2f, 0.5f + new Random().nextFloat() * 0.1f);
 								cancel();
 							}else {
-								Item item = player.getWorld().dropItem(player.getEyeLocation(), new ItemStack(Material.IRON_SWORD));
+								Random random = new Random();
+								Vector randomDir = new Vector(random.nextDouble() * 2 - 1, random.nextDouble() * 2 - 1, random.nextDouble() * 2 - 1).multiply(0.5);
+								Trident item = (Trident) player.getWorld().spawnEntity(player.getEyeLocation().add(randomDir).add(player.getLocation().getDirection().multiply(1.5)), EntityType.TRIDENT);
 								item.setVelocity(player.getLocation().getDirection().multiply(3));
-								new BukkitRunnable() {
-									
-									@Override
-									public void run() {
-										if(!Util.containsOnly(Util.getBlocksAtLocation(item.getLocation()), Material.AIR) || item.isOnGround()) {
-											item.setVelocity(new Vector());
-											item.remove();
-											cancel();
-										}
-									}
-								}.runTaskTimer(Main.getPlugin(), 0, 0);
+								item.setCustomName("Hail Blade Projectile");
+								item.setDamage(0);
+								player.getWorld().playSound(player.getLocation(), Sound.ENTITY_DROWNED_SHOOT, 1f, 1.7f + new Random().nextFloat() * 0.3f);
 							}
 						}
 					}.runTaskTimer(Main.getPlugin(), 0, 2);

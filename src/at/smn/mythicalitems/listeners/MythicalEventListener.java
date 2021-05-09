@@ -20,6 +20,7 @@ import org.bukkit.event.block.BlockIgniteEvent.IgniteCause;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -44,6 +45,13 @@ import at.smn.mythicalitems.util.mythicalitems.TitanicHydra;
 import at.smn.mythicalitems.util.mythicalitems.UnbreakableWill;
 
 public class MythicalEventListener implements Listener {
+	
+	@EventHandler
+	public void onProjectileLand(ProjectileHitEvent event) {
+		if("Hail Blade Projectile".equals(event.getEntity().getCustomName())) {
+			event.getEntity().remove();
+		}
+	}
 	
 	@EventHandler
 	public void onItemUse(PlayerInteractEvent event) {
