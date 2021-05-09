@@ -87,7 +87,15 @@ public class MythicalItemStack extends ItemStack {
 	public static boolean hasName(ItemStack is, String name) {
 		String stackName = ChatColor.stripColor(is.getItemMeta().getDisplayName());
 		String stackActualName = stackName.split(" ", 2)[1];
-		System.out.println(name + ", " + stackActualName);
 		return name.equals(stackActualName);
+	}
+	public static String stripDisplayName(String name) {
+		try {
+			String stackName = ChatColor.stripColor(name);
+			String stackActualName = stackName.split(" ", 2)[1];
+			return stackActualName;
+		}catch (Exception e) {
+			return name;
+		}
 	}
 }

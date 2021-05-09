@@ -195,11 +195,10 @@ public class Util {
 		return iStack;
 	}
     public static boolean damageEntity(LivingEntity e, Player player, float damage) {
-    	EntityDamageByEntityEvent en = new EntityDamageByEntityEvent(player, e, DamageCause.ENTITY_ATTACK, damage);
+    	EntityDamageByEntityEvent en = new EntityDamageByEntityEvent(player, e, DamageCause.CUSTOM, damage);
         Bukkit.getServer().getPluginManager().callEvent(en);
         if(!en.isCancelled()) {
         	e.damage(damage);
-        	System.out.println("damage");
         }
         return en.isCancelled();
     }

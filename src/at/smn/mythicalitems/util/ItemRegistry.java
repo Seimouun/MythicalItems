@@ -1,13 +1,16 @@
 package at.smn.mythicalitems.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import at.smn.mythicalitems.enums.MythicalItemRarity;
 import at.smn.mythicalitems.util.mythicalitems.BoulderToss;
+import at.smn.mythicalitems.util.mythicalitems.CrystalSlash;
 import at.smn.mythicalitems.util.mythicalitems.DualWield;
 import at.smn.mythicalitems.util.mythicalitems.FlingShot;
 import at.smn.mythicalitems.util.mythicalitems.FocusedAegis;
@@ -21,12 +24,15 @@ import at.smn.mythicalitems.util.mythicalitems.TitanicHydra;
 import at.smn.mythicalitems.util.mythicalitems.UnbreakableWill;
 import at.smn.mythicalitems.util.mythicalitems.UnstableMatter;
 import at.smn.mythicalitems.util.mythicalitems.VampiricScepter;
+import at.smn.mythicalitems.util.mythicalitems.VolcanicRupture;
 
 public class ItemRegistry {
 	
 	public static HashMap<Material, MythicalItemRarity> rarityHash = new HashMap<Material, MythicalItemRarity>();
 
 	public static ArrayList<MythicalEventItemStack> itemRegistry = new ArrayList<>();
+	
+	public static List<String> slashNames = Arrays.asList(new String[] {"Dual Slash", "Dual Repulsor"});
 	
 	public static void registerItems() {
 		rarityHash.put(Material.WOODEN_SWORD, MythicalItemRarity.COMMON);
@@ -49,6 +55,8 @@ public class ItemRegistry {
 		itemRegistry.add(new UnstableMatter());
 		itemRegistry.add(new HailBlade());
 		itemRegistry.add(new DualWield());
+		itemRegistry.add(new CrystalSlash());
+		itemRegistry.add(new VolcanicRupture());
 	}
 	public static MythicalItemStack makeItemMythical(ItemStack stack) {
 		System.out.println("make mythical");

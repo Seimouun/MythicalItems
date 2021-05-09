@@ -19,7 +19,7 @@ public class ItemInventoryListener implements Listener {
 
 	@EventHandler
 	public void onItemTake(InventoryClickEvent event) {
-		if(event.getCurrentItem() != null && MythicalItemStack.isMythicalItem(event.getCurrentItem()) && MythicalItemStack.hasName(event.getCurrentItem(), "Dual Repulsor")) {
+		if(event.getCurrentItem() != null && MythicalItemStack.isMythicalItem(event.getCurrentItem()) && (ItemRegistry.slashNames.contains(MythicalItemStack.stripDisplayName(event.getCurrentItem().getItemMeta().getDisplayName())))) {
 			event.setCancelled(true);
 			return;
 		}

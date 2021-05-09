@@ -148,6 +148,8 @@ public class MythicalEventListener implements Listener {
 		Player player = event.getPlayer();
 		ItemStack currentItem = player.getInventory().getItem(event.getNewSlot());
 		MythicalEventItemStack stack = MythicalEventItemStack.getStackFromBukkit(currentItem);
+		ItemStack previousItem = player.getInventory().getItem(event.getPreviousSlot());
+		MythicalEventItemStack stackFrom = MythicalEventItemStack.getStackFromBukkit(previousItem);
 		if(stack != null && stack.getItemName().equals("Perfect Execution")) {
 			if(MythicalEventItemStack.holdSelectionItem.size() <= 0) {
 				MythicalEventItemStack.holdSelectionItem.add(event.getPlayer());
@@ -160,14 +162,11 @@ public class MythicalEventListener implements Listener {
 			Util.setEntityGlowing(e, player, false);
 			MythicalEventItemStack.glowingList.remove(player.getName());
 			MythicalEventItemStack.holdSelectionItem.remove(event.getPlayer());
+			if(stackFrom != null) {
+				stackFrom.action(event, false);
+			}
 			if(stack != null) {
 				stack.action(event, true);
-			}else {
-				currentItem = player.getInventory().getItem(event.getPreviousSlot());
-				stack = MythicalEventItemStack.getStackFromBukkit(currentItem);
-				if(stack != null) {
-					stack.action(event, false);
-				}
 			}
 		}
 	}
