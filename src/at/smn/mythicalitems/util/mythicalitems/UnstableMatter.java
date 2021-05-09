@@ -55,7 +55,8 @@ public class UnstableMatter extends MythicalEventItemStack{
 						
 						@Override
 						public void run() {
-							if(System.currentTimeMillis() - lastClickHash.get(player.getName()) > 186) {
+							System.out.println(System.currentTimeMillis() - lastClickHash.get(player.getName()));
+							if(System.currentTimeMillis() - lastClickHash.get(player.getName()) > 205) {
 								new BukkitRunnable() {
 									
 									@Override

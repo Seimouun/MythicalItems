@@ -78,4 +78,16 @@ public class MythicalItemStack extends ItemStack {
 		}
 		return null;
 	}
+	public static boolean isMythicalItem(ItemStack is) {
+		if(is == null || is.getItemMeta() == null || is.getItemMeta().getLore() == null || is.getItemMeta().getDisplayName() == null)
+			return false;
+		MythicalItemRarity rarity = MythicalItemRarity.valueOf(ChatColor.stripColor(is.getItemMeta().getLore().get(0).replace(ChatColor.GRAY + "Rarity" + ChatColor.WHITE + ": ", "")));
+		return rarity != null;
+	}
+	public static boolean hasName(ItemStack is, String name) {
+		String stackName = ChatColor.stripColor(is.getItemMeta().getDisplayName());
+		String stackActualName = stackName.split(" ", 2)[1];
+		System.out.println(name + ", " + stackActualName);
+		return name.equals(stackActualName);
+	}
 }

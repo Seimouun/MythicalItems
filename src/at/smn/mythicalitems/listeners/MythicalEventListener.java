@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -43,10 +44,17 @@ import at.smn.mythicalitems.util.mythicalitems.TitanicHydra;
 import at.smn.mythicalitems.util.mythicalitems.UnbreakableWill;
 
 public class MythicalEventListener implements Listener {
-
+	
 	@EventHandler
 	public void onItemUse(PlayerInteractEvent event) {
 		MythicalEventItemStack stack = MythicalEventItemStack.getStackFromBukkit(event.getItem());
+		if(stack != null) {
+			stack.action(event);
+		}
+	}
+	@EventHandler
+	public void onInteract(PlayerInteractEntityEvent event) {
+		MythicalEventItemStack stack = MythicalEventItemStack.getStackFromBukkit(event.getPlayer().getInventory().getItemInMainHand());
 		if(stack != null) {
 			stack.action(event);
 		}

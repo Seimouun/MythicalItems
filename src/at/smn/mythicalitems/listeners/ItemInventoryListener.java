@@ -19,6 +19,10 @@ public class ItemInventoryListener implements Listener {
 
 	@EventHandler
 	public void onItemTake(InventoryClickEvent event) {
+		if(event.getCurrentItem() != null && MythicalItemStack.isMythicalItem(event.getCurrentItem()) && MythicalItemStack.hasName(event.getCurrentItem(), "Dual Repulsor")) {
+			event.setCancelled(true);
+			return;
+		}
 		if(event.getCurrentItem() != null && ItemRegistry.rarityHash.containsKey(event.getCurrentItem().getType())) {
 			ItemRegistry.makeItemMythical(event.getCurrentItem());
 		}
@@ -31,6 +35,7 @@ public class ItemInventoryListener implements Listener {
 	}
 	@EventHandler
 	public void onItemPlace(InventoryMoveItemEvent event) {
+		System.out.println("move");
 		if(event.getItem() != null && ItemRegistry.rarityHash.containsKey(event.getItem().getType())) {
 			ItemRegistry.makeItemMythical(event.getItem());
 		}

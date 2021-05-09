@@ -51,6 +51,7 @@ public class ItemRegistry {
 		itemRegistry.add(new DualWield());
 	}
 	public static MythicalItemStack makeItemMythical(ItemStack stack) {
+		System.out.println("make mythical");
 		if(MythicalItemStack.getStackFromBukkit(stack) == null) {
 			MythicalItemStack is = new MythicalItemStack(stack.getType(), rarityHash.get(stack.getType()), stack.getItemMeta());
 			stack.setItemMeta(is.getItemMeta());
