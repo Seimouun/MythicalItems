@@ -11,7 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import at.smn.mythicalitems.enums.MythicalItemRarity;
 import at.smn.mythicalitems.util.mythicalitems.BoulderToss;
 import at.smn.mythicalitems.util.mythicalitems.CrystalSlash;
+import at.smn.mythicalitems.util.mythicalitems.DemonicFangs;
 import at.smn.mythicalitems.util.mythicalitems.DualWield;
+import at.smn.mythicalitems.util.mythicalitems.EvokerFangs;
 import at.smn.mythicalitems.util.mythicalitems.FlingShot;
 import at.smn.mythicalitems.util.mythicalitems.FocusedAegis;
 import at.smn.mythicalitems.util.mythicalitems.GoldenAegis;
@@ -19,6 +21,7 @@ import at.smn.mythicalitems.util.mythicalitems.HailBlade;
 import at.smn.mythicalitems.util.mythicalitems.PerfectExecution;
 import at.smn.mythicalitems.util.mythicalitems.SeismicWave;
 import at.smn.mythicalitems.util.mythicalitems.ShadowStep;
+import at.smn.mythicalitems.util.mythicalitems.ShulkerShot;
 import at.smn.mythicalitems.util.mythicalitems.SkySplitter;
 import at.smn.mythicalitems.util.mythicalitems.TitanicHydra;
 import at.smn.mythicalitems.util.mythicalitems.UnbreakableWill;
@@ -57,9 +60,11 @@ public class ItemRegistry {
 		itemRegistry.add(new DualWield());
 		itemRegistry.add(new CrystalSlash());
 		itemRegistry.add(new VolcanicRupture());
+		itemRegistry.add(new EvokerFangs());
+		itemRegistry.add(new DemonicFangs());
+		itemRegistry.add(new ShulkerShot());
 	}
 	public static MythicalItemStack makeItemMythical(ItemStack stack) {
-		System.out.println("make mythical");
 		if(MythicalItemStack.getStackFromBukkit(stack) == null) {
 			MythicalItemStack is = new MythicalItemStack(stack.getType(), rarityHash.get(stack.getType()), stack.getItemMeta());
 			stack.setItemMeta(is.getItemMeta());

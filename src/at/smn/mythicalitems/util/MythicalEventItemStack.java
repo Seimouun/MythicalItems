@@ -1,12 +1,14 @@
 package at.smn.mythicalitems.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,12 +22,17 @@ public abstract class MythicalEventItemStack extends MythicalItemStack implement
 
 	public static List<Player> holdSelectionItem = new ArrayList<>();
 	public static HashMap<String, Entity> glowingList = new HashMap<>();
+	public static List<String> glowableItems = new ArrayList<>();
+	public static List<EntityType> removedEntityTypes = Arrays.asList(new EntityType[] {EntityType.SHULKER_BULLET, EntityType.ARMOR_STAND, EntityType.EVOKER_FANGS});
 	
 	public MythicalEventItemStack(Material mat, MythicalItemRarity rarity) {
 		super(mat, rarity);
 	}
 	public MythicalEventItemStack(Material mat, MythicalItemRarity rarity, String name) {
 		super(mat, rarity, name);
+		if(getGlowing()) {
+			glowableItems.add(name);
+		}
 	}
 	public MythicalEventItemStack(Material mat, MythicalItemRarity rarity, String name, int durability) {
 		super(mat, rarity, name, durability);
@@ -55,7 +62,7 @@ public abstract class MythicalEventItemStack extends MythicalItemStack implement
 			public void run() {
 				if(holdSelectionItem.size() > 0) {
 					for(Player player : holdSelectionItem) {
-						RayTraceResult result = player.getWorld().rayTraceEntities(player.getEyeLocation(), player.getLocation().getDirection(), 20D, 0.4D, (e) -> {return !(e.equals(player) || e instanceof Item || e.isDead());});
+						RayTraceResult result = player.getWorld().rayTraceEntities(player.getEyeLocation(), player.getLocation().getDirection(), 20D, 0.4D, (e) -> {return !(e.equals(player) || e instanceof Item || e.isDead() || removedEntityTypes.contains(e.getType()));});
 						Entity hitEntity = (result == null) ? null : result.getHitEntity();
 						Entity previousEntity = glowingList.getOrDefault(player.getName(), null);
 						if(previousEntity == null || hitEntity == null || previousEntity.getUniqueId() != hitEntity.getUniqueId()) {
@@ -63,7 +70,7 @@ public abstract class MythicalEventItemStack extends MythicalItemStack implement
 								Util.setEntityGlowing(previousEntity, player, false);
 								glowingList.remove(player.getName());
 							}
-							if(hitEntity != null) {
+							if(hitEntity != null && !MythicalEventItemStack.removedEntityTypes.contains(hitEntity.getType())) {
 								Util.setEntityGlowing(hitEntity, player, true);
 								glowingList.put(player.getName(), hitEntity);
 							}
@@ -74,5 +81,8 @@ public abstract class MythicalEventItemStack extends MythicalItemStack implement
 				}
 			}
 		}.runTaskTimer(Main.getPlugin(), 0, 1);
+	}
+	public boolean getGlowing() {
+		return false;
 	}
 }

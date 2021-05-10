@@ -19,7 +19,9 @@ import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_16_R3.util.CraftVector;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityCombustByEntityEvent;
@@ -28,6 +30,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
@@ -43,6 +46,7 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
 import at.smn.mythicalitems.enums.MythicalItemRarity;
+import at.smn.mythicalitems.main.Main;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_16_R3.AttributeBase;
 import net.minecraft.server.v1_16_R3.AttributeModifier;
@@ -199,6 +203,7 @@ public class Util {
         Bukkit.getServer().getPluginManager().callEvent(en);
         if(!en.isCancelled()) {
         	e.damage(damage);
+        	damageIndicator(e.getLocation(), damage);
         }
         return en.isCancelled();
     }
@@ -235,6 +240,28 @@ public class Util {
     public static Location lerp3D(double amount, Location loc1, Location loc2)
     {
     	return new Location(loc1.getWorld(), loc1.getX()+(loc2.getX()-loc1.getX())*amount, loc1.getY()+(loc2.getY()-loc1.getY())*amount, loc1.getZ()+(loc2.getZ()-loc1.getZ())*amount);
+    }
+    public static void damageIndicator(Location loc, double damage) {
+    	ArmorStand stand = (ArmorStand) loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
+    	stand.setCustomName((ChatColor.RED + "❤") + ChatColor.WHITE + damage);
+    	stand.setVisible(false);
+    	stand.setSmall(true);
+    	new BukkitRunnable() {
+			
+    		int i = 0;
+    		
+			@Override
+			public void run() {
+				if(i < 20) {
+					stand.setVelocity(new Vector(0,0.1,0));
+					i++;
+				}else {
+					stand.remove();
+					cancel();
+				}
+			}
+		}.runTaskTimer(Main.getPlugin(), 0, 2);
+    	stand.setCustomNameVisible(true);
     }
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void setEntityGlowing(Entity glowingEntity, Player reciever, boolean glow) {

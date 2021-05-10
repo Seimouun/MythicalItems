@@ -8,10 +8,12 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EvokerFangs;
 import org.bukkit.entity.Giant;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Trident;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -49,6 +51,16 @@ public class MythicalEventListener implements Listener {
 	@EventHandler
 	public void onProjectileLand(ProjectileHitEvent event) {
 		if("Hail Blade Projectile".equals(event.getEntity().getCustomName())) {
+			if(event.getHitEntity() != null) {
+				if("Hail Blade Projectile".equals(event.getEntity().getCustomName())) {
+					String playerName = event.getEntity().getMetadata("owner").get(0).asString();
+					Player player = Bukkit.getPlayer(playerName);
+					MythicalEventItemStack stack = MythicalEventItemStack.getStackFromBukkit(player.getInventory().getItemInMainHand());
+					if(stack != null) {
+						stack.action(event, player);
+					}
+				}
+			}
 			event.getEntity().remove();
 		}
 	}
@@ -92,6 +104,14 @@ public class MythicalEventListener implements Listener {
 			MythicalEventItemStack stack = MythicalEventItemStack.getStackFromBukkit(((Player)event.getEntity()).getInventory().getItemInMainHand());
 			if(stack != null) {
 				stack.action(event);
+			}
+		}else if(event.getDamager() instanceof Trident) {
+			if("Hail Blade Projectile".equals(event.getDamager().getCustomName())) {
+				event.setCancelled(true);
+			}
+		}else if(event.getDamager() instanceof EvokerFangs) {
+			if("demonic fang".equals(event.getDamager().getCustomName())) {
+				event.getEntity().setVelocity(new Vector(0,0.6,0));
 			}
 		}
 		if(event.getEntity() instanceof Giant) {
@@ -158,12 +178,14 @@ public class MythicalEventListener implements Listener {
 		MythicalEventItemStack stack = MythicalEventItemStack.getStackFromBukkit(currentItem);
 		ItemStack previousItem = player.getInventory().getItem(event.getPreviousSlot());
 		MythicalEventItemStack stackFrom = MythicalEventItemStack.getStackFromBukkit(previousItem);
-		if(stack != null && stack.getItemName().equals("Perfect Execution")) {
-			if(MythicalEventItemStack.holdSelectionItem.size() <= 0) {
-				MythicalEventItemStack.holdSelectionItem.add(event.getPlayer());
-				PerfectExecution.startGlowUpdate();
-			}else {
-				MythicalEventItemStack.holdSelectionItem.add(event.getPlayer());
+		if(stack != null && MythicalEventItemStack.glowableItems.contains(stack.getItemName())) {
+			if(!MythicalEventItemStack.holdSelectionItem.contains(event.getPlayer())) {
+				if(MythicalEventItemStack.holdSelectionItem.size() <= 0) {
+					MythicalEventItemStack.holdSelectionItem.add(event.getPlayer());
+					PerfectExecution.startGlowUpdate();
+				}else {
+					MythicalEventItemStack.holdSelectionItem.add(event.getPlayer());
+				}
 			}
 		}else {
 			Entity e = MythicalEventItemStack.glowingList.get(player.getName());

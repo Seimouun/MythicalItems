@@ -50,7 +50,8 @@ public class VolcanicRupture extends MythicalEventItemStack {
 							Vector direction = origin.getDirection().multiply(d).add(originVector);
 							Location loc = origin.clone().add(direction);
 							player.getWorld().spawnParticle(Particle.FLAME, loc, 20, 0.1, 0.1, 0.1, 0.02, null, true);
-							for(Entity e : loc.getWorld().getNearbyEntities(loc, 1,1,1)) {
+							
+							for(Entity e : loc.getWorld().getNearbyEntities(loc, 0.4,0.4,0.4)) {
 								if(!e.equals(player)) {
 									Util.damageEntity((LivingEntity)e, player, DAMAGE);
 									((LivingEntity)e).setFireTicks(60);

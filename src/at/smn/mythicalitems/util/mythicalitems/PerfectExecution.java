@@ -59,8 +59,7 @@ public class PerfectExecution extends MythicalEventItemStack {
 										playerLoc.setY(0);
 										entityLoc.setY(0);
 										double dist = playerLoc.distance(entityLoc);
-										if (dist < 5) {
-											player.setGameMode(mode);
+										if (dist < 5 && !damaged) {
 											Util.damageEntity(((LivingEntity) e), player, DAMAGE);
 											player.getWorld().playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.1f, 1.4f);
 											player.getWorld().playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.2f, 0.8f);
@@ -70,6 +69,7 @@ public class PerfectExecution extends MythicalEventItemStack {
 										timer++;
 									} else {
 										player.setGameMode(mode);
+										player.setFlying(false);
 										player.setVelocity(vec.multiply(0.2));
 										cancel();
 									}
@@ -81,6 +81,10 @@ public class PerfectExecution extends MythicalEventItemStack {
 			}
 		}
 		return false;
+	}
+	@Override
+	public boolean getGlowing() {
+		return true;
 	}
 
 }
